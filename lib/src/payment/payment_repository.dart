@@ -44,7 +44,7 @@ class PaymentRepository {
   Future<Payment> creditCard(
       {String? clientId,
       required String tokenCard,
-      required double valor,
+      required double amount,
       String? description,
       String? paymentMethodId,
       String? issuer,
@@ -62,7 +62,7 @@ class PaymentRepository {
             };
 
       final obj = {
-        'transaction_amount': valor,
+        'transaction_amount': amount,
         'token': tokenCard,
         'description': description,
         'installments': 1,
@@ -85,6 +85,7 @@ class PaymentRepository {
   Future<Payment> ticket(
       {String? description,
       String? clientId,
+      required double amount,
       required String name,
       required String email,
       required String docNumber}) async {
@@ -98,7 +99,7 @@ class PaymentRepository {
           };
 
     var data = {
-      "transaction_amount": 100,
+      "transaction_amount": amount,
       "description": description ?? "",
       "payment_method_id": 'bolbradesco',
       "payer": payer
@@ -112,9 +113,10 @@ class PaymentRepository {
   }
 
   ///Pagamento através de PIX
-  Future pix(
+  Future<Payment> pix(
       {String? description,
       String? clientId,
+      required double amount,
       required String name,
       required String email,
       required String docNumber}) async {
@@ -128,7 +130,7 @@ class PaymentRepository {
           };
 
     final data = {
-      "transaction_amount": 100,
+      "transaction_amount": amount,
       "description": description ?? "",
       "payment_method_id": 'pix',
       "payer": payer

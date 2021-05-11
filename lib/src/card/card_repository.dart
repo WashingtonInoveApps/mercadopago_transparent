@@ -28,7 +28,7 @@ class CardRepository {
   ///
   ///Para saber mais detalhes do tipo de pagamento e id, acesse:
   ///https://www.mercadopago.com.br/developers/pt/guides/resources/localization/payment-methods
-  Future token(
+  Future<String> token(
       {required String cardName,
       required String cpf,
       required String cardNumber,
@@ -65,7 +65,7 @@ class CardRepository {
 
   ///Essa função gera um token de um cartão ja salvo do client através do [cardId] id do cartão salvo
   ///e do [securityCode] código de segurança do cartão.
-  Future tokenWithCard(
+  Future<String> tokenWithCard(
       {required String cardId, required String securityCode}) async {
     try {
       final result = await request.post(

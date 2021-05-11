@@ -53,7 +53,7 @@ void main() {
             tokenCard:
                 await mercado.card.tokenWithCard(cardId: '', securityCode: ''),
             clientId: '',
-            valor: 100),
+            amount: 100),
         isInstanceOf<Payment>());
   });
 
@@ -67,14 +67,14 @@ void main() {
   });
 
   test('test payment boleto', () async {
-    expect(await mercado.payment.ticket(name: "", email: "", docNumber: ""),
+    expect(await mercado.payment.ticket(name: "", email: "", docNumber: "", amount: 100.0),
         isInstanceOf<Payment>());
   });
 
   test('test payment pix', () async {
     expect(
         await mercado.payment
-            .pix(name: " ", email: "", clientId: "", docNumber: ""),
+            .pix(name: " ", email: "", clientId: "", docNumber: "", amount: 100.0),
         isInstanceOf<Payment>());
   });
 

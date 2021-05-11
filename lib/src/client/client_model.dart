@@ -16,7 +16,7 @@ class Client {
   String? id;
   String? email;
   String? firstName;
-  dynamic? lastName;
+  String? lastName;
   String? phone;
   String? docNumber;
   String? description;
