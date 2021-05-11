@@ -1,3 +1,7 @@
+## [1.0.0] - TODO: Documentação.
+
+* TODO: Inserindo Documentação.
+
 ## [1.0.0] - TODO: Primeiro release.
 
 * TODO: Primeiro release.
