@@ -7,17 +7,15 @@ class CardRepository {
 
   CardRepository({required this.acessToken});
 
-
   ///Retorna as informações de um cartão através de seu [id]
   Future<Card?> get({required String id}) async {
     try {
       var result =
           await request.get(path: "v1/card_tokens/$id", acessToken: acessToken);
 
-     
       final card = Card.fromJson(result, options: true);
 
-       print(card.toJson());
+      print(card.toJson());
       return card;
     } catch (e) {
       return throw e;
