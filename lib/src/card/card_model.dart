@@ -1,49 +1,49 @@
 class Card {
   Card({
-    this.id,
-    this.expirationMonth,
-    this.expirationYear,
-    this.firstSixDigits,
-    this.lastFourDigits,
-    this.paymentMethod,
-    this.paymentType,
-    this.issuer,
-    this.docNumber,
-    this.customerId,
-    this.securityCode,
-    this.cardName,
-    this.userId,
+    required this.id,
+    required this.expirationMonth,
+    required this.expirationYear,
+    required this.firstSixDigits,
+    required this.lastFourDigits,
+    required this.paymentMethod,
+    required this.paymentType,
+    required this.issuer,
+    required this.docNumber,
+    required this.customerId,
+    required this.securityCode,
+    required this.cardholderName,
+    required this.userId,
   });
 
-  String? id;
-  int? expirationMonth;
-  int? expirationYear;
+  String id;
+  int expirationMonth;
+  int expirationYear;
   String? firstSixDigits;
-  String? lastFourDigits;
+  String lastFourDigits;
   String? paymentMethod;
+  String? issuer;
   String? paymentType;
-  String? docNumber;
-  int? issuer;
-  String? securityCode;
-  String? customerId;
+  String docNumber;
   String? userId;
-  String? cardName;
+  String? securityCode;
+  String customerId;
+  String cardholderName;
 
   factory Card.fromJson(Map<String, dynamic> json, {bool options = false}) =>
       Card(
-        id: json["id"] ?? "",
-        expirationMonth: json["expiration_month"] ?? 0,
-        expirationYear: json["expiration_year"] ?? 0,
-        firstSixDigits: json["first_six_digits"] ?? "",
-        lastFourDigits: json["last_four_digits"] ?? "",
-        paymentMethod: options ? "" : (json["payment_method"]["name"] ?? ""),
-        paymentType:
-            options ? "" : (json["payment_method"]["payment_type_id"] ?? ""),
-        issuer: options ? 0 : (json["issuer"]["id"] ?? 0),
-        cardName: json["cardholder"]["name"] ?? "",
-        docNumber: json["cardholder"]["identification"]["number"] ?? "",
-        customerId: json["customer_id"] ?? "",
-        userId: options ? "" : (json["user_id"] ?? ""),
+        id: json["id"],
+        expirationMonth: json["expiration_month"],
+        expirationYear: json["expiration_year"],
+        firstSixDigits: json["first_six_digits"],
+        lastFourDigits: json["last_four_digits"],
+        paymentMethod: options ? null : json["payment_method"]["name"],
+        paymentType: options ? null : json["payment_method"]["payment_type_id"],
+        issuer: options ? null : json["issuer"]["name"],
+        cardholderName: json["cardholder"]["name"],
+        docNumber: json["cardholder"]["identification"]["number"],
+        customerId: json["customer_id"],
+        userId: options ? null : json["user_id"],
+        securityCode: null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,7 +59,7 @@ class Card {
             'number': docNumber,
             'type': 'CPF',
           },
-          'name': cardName,
+          'name': cardholderName,
         },
         "customer_id": customerId,
         "user_id": userId,
