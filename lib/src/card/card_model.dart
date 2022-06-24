@@ -6,6 +6,7 @@ class Card {
     required this.firstSixDigits,
     required this.lastFourDigits,
     required this.paymentMethod,
+    required this.paymentMethodId,
     required this.paymentType,
     required this.issuer,
     required this.docNumber,
@@ -20,9 +21,10 @@ class Card {
   int expirationYear;
   String? firstSixDigits;
   String lastFourDigits;
-  String? paymentMethod;
   String? issuer;
+  String? paymentMethod;
   String? paymentType;
+  String? paymentMethodId;
   String docNumber;
   String? userId;
   String? securityCode;
@@ -36,6 +38,7 @@ class Card {
         expirationYear: json["expiration_year"],
         firstSixDigits: json["first_six_digits"],
         lastFourDigits: json["last_four_digits"],
+        paymentMethodId: options ? null : json["payment_method"]["id"],
         paymentMethod: options ? null : json["payment_method"]["name"],
         paymentType: options ? null : json["payment_method"]["payment_type_id"],
         issuer: options ? null : json["issuer"]["name"],
