@@ -17,7 +17,6 @@ class Request {
       final result = await _dio.post(_url + path, data: data);
       return result.data;
     } on DioError catch (e) {
-
       print(e.response!.data);
       throw e.message;
     }
@@ -36,7 +35,6 @@ class Request {
       final result = await _dio.put(_url + path, data: data);
       return result.data;
     } on DioError catch (e) {
-
       print(e.response!.data);
       throw e.message;
     }
@@ -48,6 +46,9 @@ class Request {
       Map<String, dynamic> data = const {}}) async {
     _dio.options.headers["Authorization"] = "Bearer $acessToken";
     _dio.options.headers['content-Type'] = 'application/json';
+
+    print('Bearer $acessToken');
+    print(_url + path);
 
     final result = await _dio.get(_url + path);
     return result.data;

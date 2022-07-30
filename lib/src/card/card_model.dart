@@ -25,7 +25,7 @@ class Card {
   String? paymentMethod;
   String? paymentType;
   String? paymentMethodId;
-  String docNumber;
+  String? docNumber;
   String? userId;
   String? securityCode;
   String customerId;
