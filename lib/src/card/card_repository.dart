@@ -53,7 +53,7 @@ class CardRepository {
       };
 
       final result = await request.post(
-          path: 'v1/card_tokens', acessToken: acessToken, data: card);
+          path: 'v1/card_tokens?public_key=PUBLIC_KEY', acessToken: acessToken, data: card);
       final id = result['id'];
 
       print(id);
