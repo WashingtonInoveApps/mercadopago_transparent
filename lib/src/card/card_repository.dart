@@ -1,4 +1,5 @@
 import 'package:mercadopago_transparent/src/card/card_model.dart';
+import 'package:mercadopago_transparent/src/card/installment_model.dart';
 import 'package:mercadopago_transparent/src/request_repository.dart';
 
 class CardRepository {
@@ -10,8 +11,7 @@ class CardRepository {
   ///Retorna as informações de um cartão através de seu [id]
   Future<Card?> get({required String id}) async {
     try {
-      var result =
-          await request.get(path: "v1/card_tokens/$id", acessToken: acessToken);
+      var result = await request.get(path: "v1/card_tokens/$id", acessToken: acessToken);
 
       final card = Card.fromJson(result, options: true);
 
@@ -50,8 +50,8 @@ class CardRepository {
         'issuer': issuer
       };
 
-      final result = await request.post(
-          path: 'v1/card_tokens?public_key=PUBLIC_KEY', acessToken: acessToken, data: card);
+      final result =
+          await request.post(path: 'v1/card_tokens?public_key=PUBLIC_KEY', acessToken: acessToken, data: card);
       final id = result['id'];
 
       print(id);
@@ -63,18 +63,38 @@ class CardRepository {
 
   ///Essa função gera um token de um cartão ja salvo do client através do [cardId] id do cartão salvo
   ///e do [securityCode] código de segurança do cartão.
-  Future<String> tokenWithCard(
-      {required String cardId, required String securityCode}) async {
+  Future<String> tokenWithCard({required String cardId, required String securityCode}) async {
     try {
-      final result = await request.post(
-          path: 'v1/card_tokens',
-          acessToken: acessToken,
-          data: {'cardId': cardId, 'securityCode': securityCode});
+      final result = await request
+          .post(path: 'v1/card_tokens', acessToken: acessToken, data: {'cardId': cardId, 'securityCode': securityCode});
 
       print(result['id']);
       return result['id'];
     } catch (e) {
       return throw e;
     }
+  }
+
+  /// Retorna as parcelas possíveis pelo valor informado já
+  /// com o valor total com juros
+  Future<List<InstallmentModel>> getInstallments({
+    required double amount,
+    required String cardNumber,
+  }) async {
+    final result = <InstallmentModel>[];
+    try {
+      final params = Uri(queryParameters: {
+        'locale': 'pt-BR',
+        'amount': amount.toString(),
+        'bin': cardNumber.replaceAll(' ', '').substring(0, 8),
+      }).query;
+
+      final resp = await request.get(path: 'v1/payment_methods/installments?$params', acessToken: acessToken);
+
+      result.addAll(InstallmentModel.listFromJson(resp[0]['payer_costs']));
+    } catch (e) {
+      return throw e;
+    }
+    return result;
   }
 }
