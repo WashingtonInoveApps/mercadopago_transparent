@@ -97,4 +97,19 @@ class CardRepository {
     }
     return result;
   }
+
+  /// Retorna o nome do emissor do cartao atraves do número informado: 'master', 'visa' etc...
+  Future<String?> getIssuerId({required String cardNumber}) async {
+    String? result;
+    try {
+      final params = Uri(queryParameters: {'bins': cardNumber.replaceAll(' ', '').substring(0, 8)}).query;
+
+      final resp = await request.get(path: 'v1/payment_methods/search?$params', acessToken: acessToken);
+
+      result = resp['results'][0]['id'];
+    } catch (e) {
+      return throw e;
+    }
+    return result;
+  }
 }
